@@ -1,24 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import Header from './components/header'
-import Hot from './components/hot'
-import Search from './components/search'
+import Header from './components/header';
+import Search from './components/search';
+import Hot from './components/hot';
+import { useHttpHook } from '@/hooks';
+
 import './index.less';
 
 export default function(props){
   const [state, setState] = useState()
 
+  const [citys, citysLoading] = useHttpHook({
+    url: '/commons/citys'
+  });
+  const [houses] = useHttpHook({
+    url: '/house/hot'
+  });
   useEffect(() => {
-
   }, [])
 
   return (
     <div className='home'>
-        {/* header 登录 */}
-        <Header />
-        {/* header 搜索 */}
-        <Search />
-        {/* header 热门民俗 */}
-        <Hot />
+      {/**header登录 */}
+      <Header />
+      {/**搜索 */}
+      <Search citys={citys} citysLoading={citysLoading} />
+      {/**热门民宿 */}
+      <Hot houses={houses}/>
     </div>
   )
 }
