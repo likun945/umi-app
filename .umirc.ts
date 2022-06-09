@@ -23,6 +23,16 @@ export default defineConfig({
           path: '/order',
           component: './order/index',
           title: '订单'
+        },
+        {
+          path: '/search',
+          component: './search/index',
+          title: '搜索'
+        },
+        {
+          path: '/observer',
+          component: './observer',
+          title: 'observer'
         }
       ]
     }

@@ -30,7 +30,9 @@ export default function Http({
 
   return new Promise((resolve, reject)=>{
     fetch('/api' + url, params)
-      .then(res => res.json())
+      .then(res => {
+        return res.json()
+      })
       .then(res => {
         if(res.status === 200){
           resolve(res.data);
