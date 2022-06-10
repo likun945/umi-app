@@ -12,30 +12,35 @@ export default defineConfig({
         {
           path: '/',
           component: './home/index',
-          title: '首页'
+          title: '首页',
         },
         {
           path: '/user',
           component: './user/index',
-          title: '我的'
+          title: '我的',
         },
         {
           path: '/order',
           component: './order/index',
-          title: '订单'
+          title: '订单',
         },
         {
           path: '/search',
           component: './search/index',
-          title: '搜索'
+          title: '搜索',
         },
         {
           path: '/observer',
           component: './observer',
-          title: 'observer'
-        }
-      ]
-    }
+          title: 'observer',
+        },
+        {
+          path: '/house',
+          component: './house',
+          title: '房屋详情',
+        },
+      ],
+    },
   ],
   fastRefresh: {},
 });
