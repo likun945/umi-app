@@ -1,5 +1,5 @@
-import AwesomeSwiper from 'react-awesome-swiper';
 import React, { useState, useEffect } from 'react';
+import AwesomeSwiper from 'react-awesome-swiper';
 
 export default function (props) {
   const [config, setConfig] = useState({
@@ -17,14 +17,9 @@ export default function (props) {
   return (
     <AwesomeSwiper className="banner" config={config}>
       <div className="swiper-wrapper">
-        {props?.banner?.map((item, index) => (
-          <div key={index} className="swiper-slide">
-            <img
-              alt="banner"
-              src={
-                'http://img3.mukewang.com/szimg/5d1032ab08719e0906000338-360-202.jpg'
-              }
-            />
+        {props?.banner?.map((item) => (
+          <div className="swiper-slide" key={item.id}>
+            <img alt="banner" src={item} />
           </div>
         ))}
       </div>

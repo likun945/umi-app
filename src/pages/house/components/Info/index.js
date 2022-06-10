@@ -1,5 +1,5 @@
-import { Button } from 'antd-mobile';
 import React, { useState, useEffect } from 'react';
+import { Button } from 'antd-mobile';
 import { timer } from '@/utils';
 
 export default function (props) {

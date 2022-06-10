@@ -21,6 +21,12 @@ export default {
         comments: payload,
       };
     },
+    setShowLoading(state, payload) {
+      return {
+        ...state,
+        showLoading: payload,
+      };
+    },
     reloadComments(state, payload) {
       return {
         ...state,
@@ -30,9 +36,6 @@ export default {
           pageNum: state.page.pageNum + 1,
         },
       };
-    },
-    setShowLoading(state, payload) {
-      return {};
     },
   },
   effects: {
