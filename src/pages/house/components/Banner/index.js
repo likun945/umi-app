@@ -17,30 +17,16 @@ export default function (props) {
   return (
     <AwesomeSwiper className="banner" config={config}>
       <div className="swiper-wrapper">
-        <div className="swiper-slide">
-          <img
-            alt="banner"
-            src={
-              'http://img3.mukewang.com/szimg/5d1032ab08719e0906000338-360-202.jpg'
-            }
-          />
-        </div>
-        <div className="swiper-slide">
-          <img
-            alt="banner"
-            src={
-              'http://img2.mukewang.com/szimg/5dc9047a09bae31e12000676-360-202.png'
-            }
-          />
-        </div>
-        <div className="swiper-slide">
-          <img
-            alt="banner"
-            src={
-              'http://img2.mukewang.com/szimg/5ad05dc00001eae705400300-360-202.jpg'
-            }
-          />
-        </div>
+        {props?.banner?.map((item, index) => (
+          <div key={index} className="swiper-slide">
+            <img
+              alt="banner"
+              src={
+                'http://img3.mukewang.com/szimg/5d1032ab08719e0906000338-360-202.jpg'
+              }
+            />
+          </div>
+        ))}
       </div>
       <div className="swiper-pagination"></div>
     </AwesomeSwiper>

@@ -21,12 +21,15 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "@babel/preset-react": "^7.17.12",
+    "core-js": "^3.22.8",
     "dayjs": "^1.11.3",
     "project-libs": "^1.1.5",
     "react": "17.x",
     "react-awesome-swiper": "^1.4.16",
     "react-dom": "17.x",
     "react-icons": "^4.4.0",
+    "think-react-store": "^1.6.71",
     "umi": "^3.5.25"
   },
   "devDependencies": {
