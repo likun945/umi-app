@@ -1,5 +1,6 @@
 import { Http } from '@/utils';
 import { CommonEnum } from '@/enums';
+
 export default {
   state: {
     detail: {},
@@ -37,6 +38,17 @@ export default {
         },
       };
     },
+    resetData(state, payload) {
+      return {
+        ...state,
+        // detail: {},
+        comments: [],
+        page: CommonEnum.PAGE,
+        showLoading: true,
+        reloadCommentsNum: state.reloadCommentsNum + 1,
+        ...payload,
+      };
+    },
   },
   effects: {
     async getDetailAsync(dispatch, rootState, payload) {
@@ -67,6 +79,18 @@ export default {
         type: 'setShowLoading',
         payload: lists.length ? true : false,
       });
+    },
+    async addCommentsAsync(dispatch, rootState, payload) {
+      const result = await Http({
+        url: '/comments/add',
+        body: payload,
+      });
+      if (result) {
+        dispatch({
+          type: 'resetData',
+          payload: {},
+        });
+      }
     },
   },
 };

@@ -3,29 +3,29 @@ import Header from './components/header';
 import Search from './components/search';
 import Hot from './components/hot';
 import { useHttpHook } from '@/hooks';
+import { useLocation } from 'umi';
 
 import './index.less';
 
-export default function(props){
-  const [state, setState] = useState()
+export default function (props) {
+  const [state, setState] = useState();
 
   const [citys, citysLoading] = useHttpHook({
-    url: '/commons/citys'
+    url: '/commons/citys',
   });
   const [houses] = useHttpHook({
-    url: '/house/hot'
+    url: '/house/hot',
   });
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
 
   return (
-    <div className='home'>
+    <div className="home">
       {/**header登录 */}
       <Header />
       {/**搜索 */}
       <Search citys={citys} citysLoading={citysLoading} />
       {/**热门民宿 */}
-      <Hot houses={houses}/>
+      <Hot houses={houses} />
     </div>
-  )
+  );
 }

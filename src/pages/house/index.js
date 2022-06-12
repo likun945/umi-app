@@ -34,13 +34,13 @@ export default function (props) {
   useObserverHook(
     '#' + CommonEnum.LOADING_ID,
     (entries) => {
-      // console.log(entries)
       if (
         comments &&
         comments.length &&
         showLoading &&
         entries[0].isIntersecting
       ) {
+        // console.log(123)
         reloadComments();
       }
     },
@@ -49,23 +49,23 @@ export default function (props) {
 
   useEffect(() => {
     getDetailAsync({
-      // id: query?.id
+      id: query?.id,
     });
   }, []);
 
   useEffect(() => {
     getCommentsAsync({
-      // id: query?.id
+      id: query?.id,
     });
   }, [reloadCommentsNum]);
 
-  // useEffect(()=>{
-  //   return () => {
-  //     resetData({
-  //       detail: {}
-  //     });
-  //   }
-  // }, [])
+  useEffect(() => {
+    return () => {
+      resetData({
+        detail: {},
+      });
+    };
+  }, []);
 
   return (
     <div className="house-page">
