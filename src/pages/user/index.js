@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { List } from 'antd-mobile';
 import { history } from 'umi';
+import { useStoreHook } from 'think-react-store';
+
 import './index.less';
 
 export default function (props) {
   const [state, setState] = useState();
+  const {
+    user: { username, avatar, tel, sign, getUserAsync },
+  } = useStoreHook();
   const handleClick = () => {
     history.push({
       pathname: '/user/edit',
       query: {},
     });
   };
-  useEffect(() => {}, []);
+  useEffect(() => {
+    getUserAsync({
+      id: 10,
+    });
+  }, []);
 
   return (
     <div className="user-page">
@@ -21,9 +30,9 @@ export default function (props) {
           设置
         </div>
         <div className="user">
-          <img alt="user" src={''} />
-          <div className="tel">{1}</div>
-          <div className="sign">{2}</div>
+          <img alt="user" src={avatar} />
+          <div className="tel">{tel}</div>
+          <div className="sign">{sign}</div>
         </div>
       </div>
       {/**列表 */}
