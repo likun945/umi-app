@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Link } from 'umi';
 import { cookie } from 'project-libs';
 
-export default function (props) {
+function header(props) {
   const [state, setState] = useState();
 
   useEffect(() => {
-    console.log(cookie.get('user'));
+    // console.log(cookie.get('user'));
   }, []);
-
   return (
     <div className="header">
       <div className="header_title">民宿</div>
@@ -24,3 +23,5 @@ export default function (props) {
     </div>
   );
 }
+
+export default memo(header);

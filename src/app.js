@@ -2,7 +2,7 @@ import { cookie } from 'project-libs';
 import { history } from 'umi';
 
 export function onRouteChange(route) {
-  console.log(route);
+  //   console.log(route);
   const nowPath = route.routes[0].routes.filter(
     (item) => item.path == route.location.pathname,
   );

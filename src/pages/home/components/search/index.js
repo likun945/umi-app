@@ -1,27 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import { Picker, List, Calendar, Button, Toast } from 'antd-mobile'
+import React, { useState, useEffect, memo } from 'react';
+import { Picker, List, Calendar, Button, Toast } from 'antd-mobile';
 import dayjs from 'dayjs';
-import { history } from 'umi'
+import { history } from 'umi';
 
-export default function (props) {
+function Search(props) {
   // console.log(props)
   // const [citys, setCitys] = useState([[{ label: '杭州', value: '10001' }, { label: '苏州', value: '10002' }]]);
   const [selectedCity, setSelectedCity] = useState(['10001']);
   const [times, setTimes] = useState('可选时间');
   const [dateShow, setDateShow] = useState(false);
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, []);
   const handleCityChange = (val) => {
-    setSelectedCity(val)
-  }
+    setSelectedCity(val);
+  };
   const handleDate = () => {
-    setDateShow(!dateShow)
-  }
+    setDateShow(!dateShow);
+  };
   const handleDateConfirm = (startTime, endTime) => {
-    setTimes(dayjs(startTime).format('YYYY-MM-DD') + '~' + dayjs(endTime).format('YYYY-MM-DD'))
-    setDateShow(!dateShow)
-  }
+    setTimes(
+      dayjs(startTime).format('YYYY-MM-DD') +
+        '~' +
+        dayjs(endTime).format('YYYY-MM-DD'),
+    );
+    setDateShow(!dateShow);
+  };
   const handleClick = () => {
     if (times.includes('~')) {
       history.push({
@@ -29,44 +32,58 @@ export default function (props) {
         query: {
           code: selectedCity,
           startTime: times.split('~')[0],
-          endTime: times.split('~')[1]
-        }
-      })
+          endTime: times.split('~')[1],
+        },
+      });
     } else {
       Toast.fail('请选择时间');
     }
-
-  }
+  };
+  console.log('search render');
   return (
-    <div className='search'>
+    <div className="search">
       {/* 可选城市 */}
-      <div className='search-addr'>
-        {
-          !props.citysLoading &&
+      <div className="search-addr">
+        {!props.citysLoading && (
           <Picker
             title={'城市'}
             data={props.citys}
             value={selectedCity}
             cascade={false}
             cols={1}
-            onChange={handleCityChange}>
+            onChange={handleCityChange}
+          >
             <List.Item>可选城市</List.Item>
           </Picker>
-        }
-
+        )}
       </div>
       {/* 可选时间 */}
-      <div className='search-time' onClick={handleDate}>
-        <p className='search-time_left'>出租时间</p>
-        <p className='search-time_right'>{times}</p>
+      <div className="search-time" onClick={handleDate}>
+        <p className="search-time_left">出租时间</p>
+        <p className="search-time_right">{times}</p>
       </div>
       {/* 点击按钮 */}
-      <Button type='warning' size='large' onClick={handleClick}>搜索民宿</Button>
+      <Button type="warning" size="large" onClick={handleClick}>
+        搜索民宿
+      </Button>
       <Calendar
         visible={dateShow}
         onCancel={handleDate}
         onConfirm={handleDateConfirm}
       />
     </div>
-  )
+  );
 }
+
+function areEqual(prevProps, nextProps) {
+  console.log(prevProps, nextProps);
+  if (
+    prevProps.citys === nextProps.citys &&
+    prevProps.citysLoading === nextProps.citysLoading
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+}
+export default memo(Search, areEqual);
