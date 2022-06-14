@@ -18,6 +18,7 @@ export default defineConfig({
           path: '/user',
           component: './user/index',
           title: '我的',
+          auth: true,
         },
         {
           path: '/user/edit',
@@ -28,6 +29,7 @@ export default defineConfig({
           path: '/order',
           component: './order/index',
           title: '订单',
+          auth: true,
         },
         {
           path: '/search',
@@ -43,6 +45,16 @@ export default defineConfig({
           path: '/house',
           component: './house',
           title: '房屋详情',
+        },
+        {
+          path: '/login',
+          component: './login',
+          title: '登录',
+        },
+        {
+          path: '/register',
+          component: './register',
+          title: '注册',
         },
       ],
     },
