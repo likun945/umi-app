@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { List } from 'antd-mobile';
+import { List, Button } from 'antd-mobile';
 import { history } from 'umi';
 import { useStoreHook } from 'think-react-store';
 
@@ -8,7 +8,7 @@ import './index.less';
 export default function (props) {
   const [state, setState] = useState();
   const {
-    user: { username, avatar, tel, sign, getUserAsync },
+    user: { username, avatar, phone, sign, getUserAsync, logoutAsync },
   } = useStoreHook();
   const handleClick = () => {
     history.push({
@@ -21,7 +21,9 @@ export default function (props) {
       id: 10,
     });
   }, []);
-
+  const handleLogOut = () => {
+    logoutAsync();
+  };
   return (
     <div className="user-page">
       {/**用户信息 */}
@@ -30,8 +32,8 @@ export default function (props) {
           设置
         </div>
         <div className="user">
-          <img alt="user" src={avatar} />
-          <div className="tel">{tel}</div>
+          <img alt="user" src={avatar || require('../../assets/bear.jpg')} />
+          <div className="phone">{phone}</div>
           <div className="sign">{sign}</div>
         </div>
       </div>
@@ -41,7 +43,11 @@ export default function (props) {
           <List.Item arrow="horizontal">用户协议</List.Item>
           <List.Item arrow="horizontal">常见问题</List.Item>
           <List.Item arrow="horizontal">联系客服</List.Item>
+          <List.Item>
+            <Button onClick={handleLogOut}>退出登录</Button>
+          </List.Item>
         </List>
+        <div style={{ marginTop: '100px' }}>1</div>
       </div>
     </div>
   );

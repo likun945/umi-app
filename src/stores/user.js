@@ -2,12 +2,13 @@ import { Http } from '@/utils';
 import { Toast } from 'antd-mobile';
 import { history } from 'umi';
 import { cookie, urlGet } from 'project-libs';
+import { createImportSpecifier } from 'typescript';
 export default {
   state: {
     id: undefined,
     username: undefined,
     avatar: undefined,
-    tel: undefined,
+    phone: undefined,
     sign: undefined,
   },
   reducers: {
@@ -52,10 +53,12 @@ export default {
         url: '/user/login',
         body: payload,
       });
+      console.log(result);
       if (result) {
         // console.log(urlGet('from'))
-        cookie.set('user', result);
-        history.push(urlGet('from'));
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('username', result.username);
+        urlGet('from') && history.push(urlGet('from'));
         Toast.success('登录成功');
       }
     },
@@ -65,9 +68,20 @@ export default {
         body: payload,
       });
       if (result) {
-        cookie.set('user', result);
+        console.log(result);
+        localStorage.setItem('token', result.token);
+        localStorage.setItem('username', result.username);
         Toast.success('注册成功');
       }
+    },
+    async logoutAsync(dispatch, rootState, payload) {
+      await Http({
+        url: '/user/logout',
+        body: payload,
+      });
+      Toast.success('退出登录成功');
+      localStorage.clear();
+      location.href = '/login?from=' + location.pathname;
     },
   },
 };

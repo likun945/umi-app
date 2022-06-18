@@ -4,11 +4,11 @@ import { createForm } from 'rc-form';
 import { useStoreHook } from 'think-react-store';
 
 const Edit = function (props) {
-  const [files, setFiles] = useState([]);
   const { getFieldProps, validateFields } = props.form;
   const {
-    user: { editUserAsync },
+    user: { editUserAsync, getUserAsync, avatar, phone, sign },
   } = useStoreHook();
+  const [files, setFiles] = useState([{ url: avatar }]);
   const handleChange = (files) => {
     if (files[0]?.file?.size / 1024 / 1024 > 12.5) {
       Toast.fail('图片大小不能大于5.5M');
@@ -17,7 +17,7 @@ const Edit = function (props) {
     setFiles(files);
   };
   useEffect(() => {
-    console.log(props);
+    // console.log(props);
   }, []);
   const handleSubmit = () => {
     if (!files.length) {
@@ -29,13 +29,16 @@ const Edit = function (props) {
         return;
       } else {
         editUserAsync({
-          img: files[0].url,
-          tel: value.tel,
+          avatar: files[0].url,
+          phone: value.phone,
           sign: value.sign,
         });
       }
     });
   };
+  // useEffect(()=>{
+  //   getUserAsync({})
+  // })
   return (
     <div>
       <List>
@@ -46,36 +49,32 @@ const Edit = function (props) {
             onChange={handleChange}
           ></ImagePicker>
         </List.Item>
-        <List.Item>
-          <InputItem
-            placeholder="电话"
-            {...getFieldProps('tel', {
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-              initialValue: '123',
-            })}
-          >
-            电话
-          </InputItem>
-        </List.Item>
-        <List.Item>
-          <InputItem
-            {...getFieldProps('sign', {
-              rules: [
-                {
-                  required: true,
-                },
-              ],
-              initialValue: 'likun',
-            })}
-            placeholder="用户签名"
-          >
-            用户签名
-          </InputItem>
-        </List.Item>
+        <InputItem
+          placeholder="电话"
+          {...getFieldProps('phone', {
+            rules: [
+              {
+                required: true,
+              },
+            ],
+            initialValue: phone,
+          })}
+        >
+          电话
+        </InputItem>
+        <InputItem
+          {...getFieldProps('sign', {
+            rules: [
+              {
+                required: true,
+              },
+            ],
+            initialValue: sign,
+          })}
+          placeholder="用户签名"
+        >
+          用户签名
+        </InputItem>
       </List>
       <Button
         type="warning"
