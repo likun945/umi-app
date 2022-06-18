@@ -6,6 +6,7 @@ import { useHttpHook, useObserverHook } from '@/hooks';
 import { CommonEnum } from '@/enums';
 import { Http } from '@/utils';
 import { isEmpty } from 'project-libs';
+import { ErrorBoundary } from '@/components';
 
 export default function (props) {
   const [page, setPage] = useState(CommonEnum.PAGE);
