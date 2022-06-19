@@ -14,7 +14,7 @@ export default function (props) {
   const [houseLists, setHouseLists] = useState([]);
   const [showLoading, setShowLoading] = useState(true);
   const [houseSubmitName, setHouseSubmitName] = useState('');
-  
+
   const [houses, loading] = useHttpHook({
     url: '/house/search',
     body: {
@@ -22,9 +22,9 @@ export default function (props) {
       houseName,
       code: query?.code,
       startTime: query?.startTime + ' 00:00:00',
-      endTime: query?.endTime + ' 23:59:59'
+      endTime: query?.endTime + ' 23:59:59',
     },
-    watch: [page.pageNum, houseSubmitName]
+    watch: [page.pageNum, houseSubmitName],
   });
 
   /**
@@ -33,18 +33,21 @@ export default function (props) {
    * 3，监听分页数据的修改，发送接口，请求下一页的数据；
    * 4，监听loading变化，拼装数据
    */
-  useObserverHook('#' + CommonEnum.LOADING_ID, (entries) => {
-    // console.log(entries)
-    if (!loading && entries[0].isIntersecting) {
-      setPage({
-        ...page,
-        pageNum: page.pageNum + 1
-      });
-    }
+  useObserverHook(
+    '#' + CommonEnum.LOADING_ID,
+    (entries) => {
+      // console.log(entries)
+      if (!loading && entries[0].isIntersecting) {
+        setPage({
+          ...page,
+          pageNum: page.pageNum + 1,
+        });
+      }
+    },
+    null,
+  );
 
-  }, null);
-
-  useImgHook('.item-img', (enties)=>{}, null);
+  useImgHook('.item-img', (enties) => {}, null);
 
   const handleChange = (value) => {
     // console.log(value)
@@ -69,43 +72,49 @@ export default function (props) {
 
   useEffect(() => {
     if (!loading && houses) {
-      if(houses.length){
+      if (houses.length) {
         setHouseLists([...houseLists, ...houses]);
-        if(houses.length < page.pageSize){
+        if (houses.length < page.pageSize) {
           setShowLoading(false);
         }
-      }else {
+      } else {
         setShowLoading(false);
       }
     }
-  }, [loading])
+  }, [loading]);
 
   return (
-    <div className='search-page'>
+    <div className="search-page">
       {/**顶部搜索栏 */}
       <SearchBar
-        placeholder='搜索民宿'
+        placeholder="搜索民宿"
         value={houseName}
         onChange={handleChange}
         onCancel={handleCancle}
         onSubmit={handleSubmit}
       />
       {/**搜索结果 */}
-      {!houseLists.length
-        ? <ActivityIndicator toast />
-        : <div className='result'>
-          {houseLists.map(item => (
-            <div className='item' key={item.id}>
-              <img alt='img' className='item-img' src={require('../../assets/blank.png')} data-src={item.img} />
-              <div className='item-right'>
-                <div className='title'>{item.title}</div>
-                <div className='price'>{item.price}</div>
+      {!houseLists.length ? (
+        <ActivityIndicator toast />
+      ) : (
+        <div className="result">
+          {houseLists.map((item) => (
+            <div className="item" key={item.id}>
+              <img
+                alt="img"
+                className="item-img"
+                src={require('../../assets/blank.png')}
+                data-src={item?.imgs[0]?.url}
+              />
+              <div className="item-right">
+                <div className="title">{item.name}</div>
+                <div className="price">{item.price}</div>
               </div>
             </div>
           ))}
-          <ShowLoading showLoading={showLoading}/>
+          <ShowLoading showLoading={showLoading} />
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }
