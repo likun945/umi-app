@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from '@/components';
 import { TextareaItem, Button, Toast } from 'antd-mobile';
 import { useStoreHook } from 'think-react-store';
+import { useLocation } from 'umi';
 
 export default function (props) {
   const [show, setShow] = useState(false);
   const [commentsValue, setCommentsValue] = useState();
+  const { query } = useLocation();
   const {
     house: { addCommentsAsync },
   } = useStoreHook();
@@ -28,6 +30,7 @@ export default function (props) {
       handleClose();
       addCommentsAsync({
         comment: commentsValue,
+        houseId: query?.id,
       });
     } else {
       Toast.fail('请添加信息');
