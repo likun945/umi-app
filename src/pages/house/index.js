@@ -21,6 +21,10 @@ export default function (props) {
       reloadCommentsNum,
       showLoading,
       resetData,
+      order,
+      hasOrderAsync,
+      addOrderAsync,
+      delOrderAsync,
     },
   } = useStoreHook();
   const { query } = useLocation();
@@ -66,13 +70,28 @@ export default function (props) {
       });
     };
   }, []);
-
+  useEffect(() => {
+    hasOrderAsync({
+      id: query?.id,
+    });
+  }, []);
+  const handleBtnClick = (id) => {
+    if (!id) {
+      addOrderAsync({
+        id: query?.id,
+      });
+    } else {
+      delOrderAsync({
+        id: order.id,
+      });
+    }
+  };
   return (
     <div className="house-page">
       {/**banner */}
       <Banner banner={detail?.banner} />
       {/**房屋信息 */}
-      <Info detail={detail?.info} />
+      <Info detail={detail?.info} order={order} btnClick={handleBtnClick} />
       {/**评论列表 */}
       <Lists lists={comments} showLoading={showLoading} />
       {/**footer */}

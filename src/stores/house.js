@@ -1,6 +1,19 @@
 import { Http } from '@/utils';
 import { CommonEnum } from '@/enums';
 
+async function handleOrder(url, dispatch, payload) {
+  const result = await Http({
+    url,
+    body: payload,
+  });
+  if (result) {
+    dispatch({
+      type: 'setOrder',
+      payload: result,
+    });
+  }
+}
+
 export default {
   state: {
     detail: {},
@@ -8,6 +21,7 @@ export default {
     page: CommonEnum.PAGE,
     showLoading: true,
     reloadCommentsNum: 0,
+    order: null,
   },
   reducers: {
     getDetail(state, payload) {
@@ -26,6 +40,12 @@ export default {
       return {
         ...state,
         showLoading: payload,
+      };
+    },
+    setOrder(state, payload) {
+      return {
+        ...state,
+        order: payload,
       };
     },
     reloadComments(state, payload) {
@@ -91,6 +111,15 @@ export default {
           payload: {},
         });
       }
+    },
+    async hasOrderAsync(dispatch, rootState, payload) {
+      await handleOrder('/orders/hasOrder', dispatch, payload);
+    },
+    async addOrderAsync(dispatch, rootState, payload) {
+      await handleOrder('/orders/addOrder', dispatch, payload);
+    },
+    async delOrderAsync(dispatch, rootState, payload) {
+      await handleOrder('/orders/delOrder', dispatch, payload);
     },
   },
 };
